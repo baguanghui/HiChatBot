@@ -1,0 +1,275 @@
+<html>
+    <head>        
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0" /> -->
+        <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no,maximum-scale=1.0" />
+  
+        <title>嗨聊机器人</title>
+        <!-- <link rel="stylesheet" type="text/css" href="/assets/lib/bootstrap/dist/css/bootstrap.min.css">
+        <link rel="stylesheet" href="/assets/lib/bootstrap/dist/css/bootstrap-theme.min.css" />         -->
+        <style>
+            .me_css{
+                text-align: left;
+                color:blue;
+            }
+            .bot_css{
+                text-align: left;
+                color:green;
+            }
+
+        *{ padding:0; margin:0; list-style:none;font-family: '黑体'}
+        html{background: #efeff4;}
+        ul,li{list-style: none;}
+        a{text-decoration: none}
+        section{margin-top: .18rem; font-size: .15rem;}
+        div.wrap{
+            width: 3.75rem;
+            line-height: .22rem;
+            text-align: left;
+            padding-bottom: .5rem;
+            /*padding-left: .15rem;*/
+        }
+        .wrap div{
+            margin-bottom: .18rem;
+        }
+        .time{
+            color: #a5a5a6;
+            line-height: .22rem;
+            text-align: center;
+            margin-bottom: .1rem;
+        }
+        .head{
+            /* background: url('img/head2.jpg');*/
+            display: inline-block;
+            width:.41rem;
+            height:.41rem;
+            border-radius: 50%;
+            -webkit-background-size: cover;
+            background-size: cover;
+            /*overflow: hidden;*/
+            vertical-align: middle;
+            margin-right: .1rem;
+            margin-left: .15rem;
+            /*float: left;*/
+        }
+
+        .head span{
+            float: left;
+        }
+        .right{
+            min-height:.42rem;
+            text-align: right;
+            display:table;
+            width:100%;
+            /*float: right;*/
+        }
+        span.head.p1{
+             background: url('../assets/images/head1.jpg');
+             -webkit-background-size: cover;
+             background-size: cover;
+         }
+        span.head.p2{
+            background: url('../assets/images/head2.jpg');
+            -webkit-background-size: cover;
+            background-size: cover;
+        }
+        b {
+            width: .01rem;
+            height: 0px;
+            line-height: 0;
+            border-width: .1rem .062rem;
+            /* border-top-width: .07rem; */
+            /* border-left-width: .02rem; */
+            border-style: solid;
+            border-color: #44cc5b #efeff4 #efeff4;
+            display: inline-block;
+            transform: rotate(90deg);
+            -webkit-transform: rotate(90deg);
+            vertical-align: middle;
+            padding: 0;
+            margin: 0;
+            position: absolute;
+            left: -.148rem;
+            top: calc(50% - .1rem);
+        }
+        .right b{
+            border-color: #e3c094 #efeff4 #efeff4;
+            transform: rotate(-90deg);
+            -webkit-transform: rotate(-90deg);
+            position: absolute;
+            left: calc(100% + .03rem);
+            top: calc(50% - .1rem);
+        }
+       .msg_bar{
+           /*min-height: .42rem;*/
+           background:#44cc5b ;
+           display: inline-block;
+           border-radius: .11rem;
+           padding: .14rem .13rem;
+           margin-left: .022rem;
+           position: relative;
+       }
+        .right .msg_bar{
+            background:#e3c094 ;
+            /*float: right;*/
+            max-width: 2.6rem;
+            text-align: left;
+        }
+        .right .head.p2{
+            /*float: right;*/
+            margin-left: .2rem;
+            margin-right: .15rem;
+            vertical-align: middle;
+        }
+        .table-cell{
+            display:table-cell;
+            vertical-align: middle;
+        }
+        .left{
+           /* float: left;*/
+            width:100%;
+            display: table;
+        }
+        .head_container{
+            width: .76rem;
+        }
+
+        .msg_text{
+            vertical-align: middle;
+            line-height: .42rem;
+        }
+        .sendMsg{
+            position: fixed;
+            bottom:0;
+            left: 0;
+            width: 4.1rem;
+            height:.37rem;
+
+        }
+        .sendMsg #txt_question{
+              width:78%;
+            height:100%;
+            box-sizing: border-box;
+            margin-bottom: 0;
+            outline: none;
+            border:none;
+          }
+        .sendMsg #btnSend{
+            width:13%;
+            height:100%;
+            box-sizing: border-box;
+            outline: none;
+            border:none;
+        }
+    </style>
+       
+    </head>
+    <body>
+            <section>
+                    <div class="wrap ">
+                    <div id='chatDiv'>
+                    </div>
+                      
+                
+                    </div>
+                    <div class="sendMsg" >
+                        <input id='txt_question' class='form-control' type='text'  />
+                        <button id='btnSend' class='btn btn-default' type="button" >发送</button>
+                    </div>
+                
+                </section>
+        <!-- <div style="width:300px;margin: 0px auto; " >
+            <div style="text-align: center;" >
+                    <p><h2>聊天机器人</h2></p>
+            </div>
+            <div id='chatDiv'>                
+            </div>            
+            <div>               
+                <div class='form-inline' style="margin-bottom: 10px;" >
+                    Say: <input id='txt_question' class='form-control' type='text'  />&nbsp;&nbsp;<button id='btnSend' class='btn btn-default' type="button" >发送</button>
+                </div> 
+            </div> 
+        </div> -->
+        <script src="/assets/scripts/jquery.min.js" asp-append-version="true"></script>
+        <!-- <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.js"></script> -->
+       <script>
+            $(function(){
+                function change(){
+                var oHtml=document.querySelector('html');
+                oHtml.style.fontSize=document.documentElement.clientWidth/375*100+'px';
+            }
+
+            change();
+            window.addEventListener('resize',change,false);
+            //time
+           var time= getNowFormatDate()
+            var wrap = $(".wrap");
+                var timeDiv = '<p class="time"><span>'+"嗨聊机器人"+'</span><br>'+time+'</p>' 
+                wrap.prepend(timeDiv);
+            //main
+                $("#btnSend").click(function(){
+                    sendQuestion();
+                }) 
+                $(document).keyup(function(event){
+                    if(event.keyCode ==13){
+                        $("#btnSend").trigger("click");
+                    }
+                });               
+            });
+            function sendQuestion(){  
+                var question = $("#txt_question").val(); 
+                if($.trim(question) == ""){
+                    return;
+                }
+                var chatDiv = $("#chatDiv");
+                var questionDiv = "<div class='left'><div class='table-cell head_container'><span class='head p1'></span></div><p class='msg_bar'><b></b>"+question+"</p>"
+               
+                chatDiv.append(questionDiv);
+                $.ajax({
+                type: "GET",
+                url: "/getAnswer",
+                data: { question: question },
+                dataType: 'json',
+                success: function (data) {                   
+                    // var answerDiv = "<div class='bot_css' ><p>" + data.answer + "</p></div>";
+                    var answerDiv = '<div class="right " style="margin-bottom: .25rem"><div class="table-cell"> <p class="msg_bar"><b></b>'+
+                        data.answer+'</p></div><div class="table-cell head_container"><span class="head p2 "></span></div></div>'
+            
+                    chatDiv.append(answerDiv);
+                    $("#txt_question").val('');
+                    scrollToEnd();
+                },
+                error: function (e) {
+                    
+                    alert(e.statusText);                    
+                }
+            }).always(function () {
+                
+            });
+           
+          
+            }
+            function scrollToEnd(){                
+                $(document).scrollTop(6000); 
+            }
+
+            function getNowFormatDate() {
+                var date = new Date();
+                var seperator1 = "-";
+                var seperator2 = ":";
+                var month = date.getMonth() + 1;
+                var strDate = date.getDate();
+                if (month >= 1 && month <= 9) {
+                    month = "0" + month;
+                }
+                if (strDate >= 0 && strDate <= 9) {
+                    strDate = "0" + strDate;
+                }
+                var currentdate = date.getFullYear() + seperator1 + month + seperator1 + strDate
+                        + " " + date.getHours() + seperator2 + date.getMinutes()
+                        + seperator2 + date.getSeconds();
+                return currentdate;
+            }
+        </script>            
+    </body>    
+</html>

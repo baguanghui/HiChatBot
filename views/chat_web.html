@@ -1,0 +1,75 @@
+<html>
+    <head>        
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>嗨聊机器人</title>
+        <link rel="stylesheet" type="text/css" href="/assets/lib/bootstrap/dist/css/bootstrap.min.css">
+        <link rel="stylesheet" href="/assets/lib/bootstrap/dist/css/bootstrap-theme.min.css" />        
+        <style>
+            .me_css{
+                text-align: left;
+                color:blue;
+            }
+            .bot_css{
+                text-align: left;
+                color:green;
+            }
+        </style>
+    </head>
+    <body>
+        <div style="width:300px;margin: 0px auto; " >
+            <div style="text-align: center;" >
+                    <p><h2>嗨聊机器人</h2></p>
+            </div>
+            <div id='chatDiv'>                
+            </div>            
+            <div>               
+                <div class='form-inline' style="margin-bottom: 10px;" >
+                    Say: <input id='txt_question' class='form-control' autocomplete="off" type='text'  />&nbsp;&nbsp;<button id='btnSend' class='btn btn-default' type="button" >发送</button>
+                </div> 
+            </div> 
+        </div>
+        <script src="/assets/scripts/jquery.min.js" asp-append-version="true"></script>
+        <script>
+            $(function(){
+                $("#btnSend").click(function(){
+                    sendQuestion();
+                }) 
+                $(document).keyup(function(event){
+                    if(event.keyCode ==13){
+                        $("#btnSend").trigger("click");
+                    }
+                });               
+            });
+            function sendQuestion(){  
+                var question = $("#txt_question").val(); 
+                if($.trim(question) == ""){
+                    return;
+                }
+                var chatDiv = $("#chatDiv");
+                var questionDiv = "<div class='me_css' ><p>" + question + "</p></div>";
+                chatDiv.append(questionDiv);
+                $.ajax({
+                type: "GET",
+                url: "/getAnswer",
+                data: { question: question },
+                dataType: 'json',
+                success: function (data) {                   
+                    var answerDiv = "<div class='bot_css' ><p>" + data.answer + "</p></div>";
+                    chatDiv.append(answerDiv);
+                    $("#txt_question").val('');
+                    scrollToEnd();
+                },
+                error: function (e) {
+                    alert(e.statusText);                    
+                }
+            }).always(function () {
+
+            });
+            }
+            function scrollToEnd(){                
+                $(document).scrollTop(6000); 
+            }
+        </script>            
+    </body>    
+</html>
